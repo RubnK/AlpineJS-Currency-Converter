@@ -22,6 +22,7 @@
             <div>
                 <label for="fromCurrency">De :</label>
                 <select id="fromCurrency" x-model="fromCurrency" @change="updateSavedCurrencies">
+                    <option value disabled default>Choisissez une devise</option>
                     <template x-for="currency in currencies">
                         <option :value="currency.code" x-text="currency.name"></option>
                     </template>
@@ -32,6 +33,7 @@
             <div>
                 <label for="toCurrency">Vers :</label>
                 <select id="toCurrency" x-model="toCurrency">
+                    <option value disabled default>Choisissez une devise</option>
                     <template x-for="currency in currencies">
                         <option :value="currency.code" x-text="currency.name"></option>
                     </template>
@@ -72,8 +74,8 @@
                 ],
                 convertedAmount: null,
                 apiKey: 'YOUR_API_KEY', // Remplacez par votre clé API
-                fromCurrency: 'AED',
-                toCurrency: 'AED',
+                fromCurrency: 'EUR',
+                toCurrency: '',
 
                 async init() {
                     await this.getCurrencies();
