@@ -1,0 +1,48 @@
+body{
+    background-color: #101728;
+	font-family: 'Quicksand', sans-serif;
+}
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.form{
+	display: flex;
+	flex-direction: column;
+	width: 20rem;
+	background-color: white;
+	padding: 1rem 4rem;
+	color: black;
+    margin-top: 1rem;
+    height: 24rem;
+}
+input{
+    height: 2rem;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+select{
+	height: 2rem;
+	font-family: 'Quicksand', sans-serif;
+    margin-bottom: 1rem;
+}
+.conversion{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.saves{
+    padding: 1rem 3rem 1rem 3rem;
+    width: 25rem;
+    margin-top: 1rem;
+    background-color: white;
+}
+li{
+    list-style-type: none;
+    margin-bottom: 1rem;
+}
+h1{
+    text-align: center;
+}
