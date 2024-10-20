@@ -20,7 +20,7 @@
 
             <!-- Choisir la devise d'origine -->
             <div>
-                <label for="fromCurrency">De :</label>
+                <label for="fromCurrency">Devise initiale :</label>
                 <select id="fromCurrency" x-model="fromCurrency" @change="updateSavedCurrencies">
                     <option value disabled default>Choisissez une devise</option>
                     <template x-for="currency in currencies">
@@ -28,12 +28,12 @@
                     </template>
                 </select>
             </div>
-
+            <hr>
             <!-- Choisir la devise cible -->
             <div>
-                <label for="toCurrency">Vers :</label>
-                <select id="toCurrency" x-model="toCurrency">
-                    <option value disabled default>Choisissez une devise</option>
+                <label for="toCurrency">Ajouter une devise à la liste :</label>
+                <select id="toCurrency" x-model="toCurrency" required>
+                    <option value disabled default>Choisissez une devise </option>
                     <template x-for="currency in currencies">
                         <option :value="currency.code" x-text="currency.name"></option>
                     </template>
@@ -43,7 +43,6 @@
             <!-- Ajouter la devise sauvegardée -->
             <button @click="addSavedCurrency">Convertir</button>
         </div>
-        
         <p class="copyright">&copy RubnK 2024</p>
 
         <!-- Liste des devises sauvegardées et conversion vers chacune -->
@@ -63,6 +62,7 @@
             </span>
         </div>
     </div>
+
 
     <script>
         function currencyConverter() {
