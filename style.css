@@ -46,3 +46,8 @@ li{
 h1{
     text-align: center;
 }
+.copyright{
+    text-align: center;
+    margin-top: 3rem;
+    color: white;
+}
