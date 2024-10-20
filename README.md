@@ -9,6 +9,7 @@ This Alpine.JS app is a currency converter that utilizes the ExchangeRate-API to
 - [Prerequisites](#Prerequisites)
 - [Setup](#Setup)
 - [Configuration](#Configuration)
+- [Screenshots](#Screenshots)
 - [Contributing](#Contributing)
 
 ## Prerequisites
@@ -28,6 +29,9 @@ To configure the API key, locate the following line in the JavaScript section of
 ```javascript
 apiKey: 'YOUR_API_KEY', // Replace 'YOUR_API_KEY' with your actual ExchangeRate-API key
 ```
+
+## Screenshots
+![image](https://github.com/user-attachments/assets/04bb507f-2390-4722-877d-100aa5950154)
 
 ## Contributing
 Feel free to contribute to the project by submitting issues or pull requests.
