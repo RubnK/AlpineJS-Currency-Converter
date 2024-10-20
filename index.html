@@ -45,15 +45,18 @@
         <!-- Liste des devises sauvegardées et conversion vers chacune -->
         <div class="saves">
             <h3>Devises sauvegardées</h3>
-            <ul>
-                <template x-for="(savedCurrency, index) in savedCurrencies" :key="index">
-                    <li>
-                        <span x-text="savedCurrency.name"></span>
-                        <button @click="removeSavedCurrency(index)">Supprimer</button>
-                        <div x-text="`${amount} ${fromCurrency} = ${savedCurrency.convertedAmount} ${savedCurrency.code}`"></div>
-                    </li>
-                </template>
-            </ul>
+            <span x-show="savedCurrencies.length === 0"><em>Aucune devise sauvegardée</em></span>
+            <span x-show="savedCurrencies.length > 0">
+                <ul>
+                    <template x-for="(savedCurrency, index) in savedCurrencies" :key="index">
+                        <li>
+                            <span x-text="savedCurrency.name"></span>
+                            <button @click="removeSavedCurrency(index)">Supprimer</button>
+                            <div x-text="`${amount} ${fromCurrency} = ${savedCurrency.convertedAmount} ${savedCurrency.code}`"></div>
+                        </li>
+                    </template>
+                </ul>
+            </span>
         </div>
     </div>
 
