@@ -9,7 +9,6 @@ This Alpine.JS app is a currency converter that utilizes the ExchangeRate-API to
 - [Prerequisites](#Prerequisites)
 - [Setup](#Setup)
 - [Configuration](#Configuration)
-- [Screenshots](#Screenshots)
 - [Contributing](#Contributing)
 
 ## Prerequisites
