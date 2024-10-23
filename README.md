@@ -33,13 +33,13 @@ apiKey: 'YOUR_API_KEY', // Replace 'YOUR_API_KEY' with your actual ExchangeRate-
 
 ## Features
 - Convert amounts between different currencies using real-time exchange rates.
-- Add bank fees (in percentage) to the conversion.
+- Add change fees (in percentage) to the conversion.
 - Save your favorite currencies for quick access.
 - Easily remove saved currencies from the list.
 - Automatically updates conversions when currencies or fees are modified.
 
 ## Screenshots
-![screenshot](https://github.com/user-attachments/assets/04bb507f-2390-4722-877d-100aa5950154)
+![convertisseur_devises](https://github.com/user-attachments/assets/134b62cd-88a1-41bf-acc2-5186f4e6423c)
 
 ## Contributing
 Feel free to contribute to the project by submitting issues or pull requests.
