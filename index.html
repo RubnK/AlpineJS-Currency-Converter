@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>AlpineJS Currency Converter</title>
+    <title>Convertisseur de devises en AlpineJS</title>
     <script src="https://unpkg.com/alpinejs" defer></script>
 </head>
 <body>
@@ -14,15 +14,21 @@
 
             <!-- Montant à convertir -->
             <div>
-                <label for="amount">Montant :</label><br>
-                <input type="number" id="amount" x-model="amount" placeholder="Enter amount" @input="updateSavedCurrencies" />
+                <label for="amount">Montant :</label>
+                <input type="number" id="amount" x-model="amount" min="0" step="0.01" placeholder="Entrez un montant" @input="updateSavedCurrencies" />
+            </div>
+
+            <!-- Ajouter les frais bancaires -->
+            <div>
+                <label for="bankFee">Frais bancaires (%) :</label>
+                <input type="number" id="bankFee" x-model="bankFee" min="0" max="100" step="0.5" placeholder="Entrez vos frais bancaires" @input="updateSavedCurrencies" />
             </div>
 
             <!-- Choisir la devise d'origine -->
             <div>
                 <label for="fromCurrency">Devise initiale :</label>
                 <select id="fromCurrency" x-model="fromCurrency" @change="updateSavedCurrencies">
-                    <option value disabled default>Choisissez une devise</option>
+                    <option value disabled selected>Choisissez une devise</option>
                     <template x-for="currency in currencies">
                         <option :value="currency.code" x-text="currency.name"></option>
                     </template>
@@ -33,7 +39,7 @@
             <div>
                 <label for="toCurrency">Ajouter une devise à la liste :</label>
                 <select id="toCurrency" x-model="toCurrency" required>
-                    <option value disabled default>Choisissez une devise </option>
+                    <option value disabled selected>Choisissez une devise </option>
                     <template x-for="currency in currencies">
                         <option :value="currency.code" x-text="currency.name"></option>
                     </template>
@@ -41,7 +47,7 @@
             </div>
 
             <!-- Ajouter la devise sauvegardée -->
-            <button @click="addSavedCurrency">Convertir</button>
+            <button @click="addSavedCurrency">Ajouter</button>
         </div>
         <p class="copyright">&copy RubnK 2024</p>
 
@@ -54,7 +60,7 @@
                     <template x-for="(savedCurrency, index) in savedCurrencies" :key="index">
                         <li>
                             <span x-text="savedCurrency.name"></span>
-                            <button @click="removeSavedCurrency(index)">Supprimer</button>
+                            <button @click="savedCurrencies.splice(index, 1)">Supprimer</button>
                             <div x-text="`${amount} ${fromCurrency} = ${savedCurrency.convertedAmount} ${savedCurrency.code}`"></div>
                         </li>
                     </template>
@@ -68,6 +74,7 @@
         function currencyConverter() {
             return {
                 amount: 1,
+                bankFee: 0,
                 currencies: [],
                 savedCurrencies: [
                     { code: 'EUR', name: 'Euro (EUR)', convertedAmount: null },
@@ -98,19 +105,13 @@
                     if (!this.savedCurrencies.some(currency => currency.code === this.toCurrency)) {
                         const response = await fetch(`https://v6.exchangerate-api.com/v6/${this.apiKey}/latest/${this.fromCurrency}`);
                         const data = await response.json();
-                        const rate = data.conversion_rates[this.toCurrency];
 
                         this.savedCurrencies.push({
                             code: this.toCurrency,
-                            name: this.currencies.find(currency => currency.code === this.toCurrency).name,
-                            convertedAmount: (this.amount * rate).toFixed(2)
+                            name: this.currencies.find(currency => currency.code === this.toCurrency).name
                         });
+                        this.updateSavedCurrencies();
                     }
-                },
-
-                // Supprimer une devise sauvegardée
-                removeSavedCurrency(index) {
-                    this.savedCurrencies.splice(index, 1);
                 },
 
                 // Mettre à jour les conversions pour les devises sauvegardées
@@ -123,7 +124,7 @@
                             const rate = data.conversion_rates[savedCurrency.code];
                             return {
                                 ...savedCurrency,
-                                convertedAmount: (this.amount * rate).toFixed(2)
+                                convertedAmount: (this.amount * rate * (1 - this.bankFee / 100)).toFixed(2)
                             };
                         });
                     }
