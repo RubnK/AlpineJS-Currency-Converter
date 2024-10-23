@@ -21,8 +21,8 @@
 
                 <!-- Ajouter les frais bancaires -->
                 <div>
-                    <label for="bankFee">Frais bancaires (%) :</label>
-                    <input type="number" id="bankFee" x-model="bankFee" min="0" max="100" step="0.5" placeholder="Entrez vos frais bancaires" @input="updateSavedCurrencies" />
+                    <label for="changeFee">Frais de change (%) :</label>
+                    <input type="number" id="changeFee" x-model="changeFee" min="0" max="100" step="0.5" placeholder="Entrez vos frais bancaires" @input="updateSavedCurrencies" />
                 </div>
 
                 <!-- Choisir la devise d'origine -->
@@ -81,7 +81,7 @@
         function currencyConverter() {
             return {
                 amount: 1,
-                bankFee: 0,
+                changeFee: 0,
                 currencies: [],
                 savedCurrencies: [
                     { code: 'EUR', name: 'Euro (EUR)', convertedAmount: null },
@@ -131,7 +131,7 @@
                             const rate = data.conversion_rates[savedCurrency.code];
                             return {
                                 ...savedCurrency,
-                                convertedAmount: (this.amount * rate * (1 - this.bankFee / 100)).toFixed(2)
+                                convertedAmount: (this.amount * rate * (1 - this.changeFee / 100)).toFixed(2)
                             };
                         });
                     }
