@@ -8,64 +8,71 @@
     <script src="https://unpkg.com/alpinejs" defer></script>
 </head>
 <body>
-    <div x-data="currencyConverter()" x-init="init" class="container">
-        <div class="form">
-            <h1>Convertisseur de devises</h1>
+    <div x-data="currencyConverter()" x-init="init">
+        <div x-show="apiKey.length === 24" class="container">
+            <div class="form">
+                <h1>Convertisseur de devises</h1>
 
-            <!-- Montant à convertir -->
-            <div>
-                <label for="amount">Montant :</label>
-                <input type="number" id="amount" x-model="amount" min="0" step="0.01" placeholder="Entrez un montant" @input="updateSavedCurrencies" />
-            </div>
+                <!-- Montant à convertir -->
+                <div>
+                    <label for="amount">Montant :</label>
+                    <input type="number" id="amount" x-model="amount" min="0" step="0.01" placeholder="Entrez un montant" @input="updateSavedCurrencies" />
+                </div>
 
-            <!-- Ajouter les frais bancaires -->
-            <div>
-                <label for="bankFee">Frais bancaires (%) :</label>
-                <input type="number" id="bankFee" x-model="bankFee" min="0" max="100" step="0.5" placeholder="Entrez vos frais bancaires" @input="updateSavedCurrencies" />
-            </div>
+                <!-- Ajouter les frais bancaires -->
+                <div>
+                    <label for="bankFee">Frais bancaires (%) :</label>
+                    <input type="number" id="bankFee" x-model="bankFee" min="0" max="100" step="0.5" placeholder="Entrez vos frais bancaires" @input="updateSavedCurrencies" />
+                </div>
 
-            <!-- Choisir la devise d'origine -->
-            <div>
-                <label for="fromCurrency">Devise initiale :</label>
-                <select id="fromCurrency" x-model="fromCurrency" @change="updateSavedCurrencies">
-                    <option value disabled selected>Choisissez une devise</option>
-                    <template x-for="currency in currencies">
-                        <option :value="currency.code" x-text="currency.name"></option>
-                    </template>
-                </select>
-            </div>
-            <hr>
-            <!-- Choisir la devise cible -->
-            <div>
-                <label for="toCurrency">Ajouter une devise à la liste :</label>
-                <select id="toCurrency" x-model="toCurrency" required>
-                    <option value disabled selected>Choisissez une devise </option>
-                    <template x-for="currency in currencies">
-                        <option :value="currency.code" x-text="currency.name"></option>
-                    </template>
-                </select>
-            </div>
+                <!-- Choisir la devise d'origine -->
+                <div>
+                    <label for="fromCurrency">Devise initiale :</label>
+                    <select id="fromCurrency" x-model="fromCurrency" @change="updateSavedCurrencies">
+                        <option value disabled selected>Choisissez une devise</option>
+                        <template x-for="currency in currencies">
+                            <option :value="currency.code" x-text="currency.name"></option>
+                        </template>
+                    </select>
+                </div>
+                <hr>
+                <!-- Choisir la devise cible -->
+                <div>
+                    <label for="toCurrency">Ajouter une devise à la liste :</label>
+                    <select id="toCurrency" x-model="toCurrency" required>
+                        <option value disabled selected>Choisissez une devise </option>
+                        <template x-for="currency in currencies">
+                            <option :value="currency.code" x-text="currency.name"></option>
+                        </template>
+                    </select>
+                </div>
 
-            <!-- Ajouter la devise sauvegardée -->
-            <button @click="addSavedCurrency">Ajouter</button>
+                <!-- Ajouter la devise sauvegardée -->
+                <button @click="addSavedCurrency">Ajouter</button>
+            </div>
+            <p class="copyright">&copy RubnK 2024</p>
+
+            <!-- Liste des devises sauvegardées et conversion vers chacune -->
+            <div class="saves">
+                <h3>Devises sauvegardées</h3>
+                <span x-show="savedCurrencies.length === 0"><em>Aucune devise sauvegardée</em></span>
+                <span x-show="savedCurrencies.length > 0">
+                    <ul>
+                        <template x-for="(savedCurrency, index) in savedCurrencies" :key="index">
+                            <li>
+                                <span x-text="savedCurrency.name"></span>
+                                <button @click="savedCurrencies.splice(index, 1)">Supprimer</button>
+                                <div x-text="`${amount} ${fromCurrency} = ${savedCurrency.convertedAmount} ${savedCurrency.code}`"></div>
+                            </li>
+                        </template>
+                    </ul>
+                </span>
+            </div>
         </div>
-        <p class="copyright">&copy RubnK 2024</p>
-
-        <!-- Liste des devises sauvegardées et conversion vers chacune -->
-        <div class="saves">
-            <h3>Devises sauvegardées</h3>
-            <span x-show="savedCurrencies.length === 0"><em>Aucune devise sauvegardée</em></span>
-            <span x-show="savedCurrencies.length > 0">
-                <ul>
-                    <template x-for="(savedCurrency, index) in savedCurrencies" :key="index">
-                        <li>
-                            <span x-text="savedCurrency.name"></span>
-                            <button @click="savedCurrencies.splice(index, 1)">Supprimer</button>
-                            <div x-text="`${amount} ${fromCurrency} = ${savedCurrency.convertedAmount} ${savedCurrency.code}`"></div>
-                        </li>
-                    </template>
-                </ul>
-            </span>
+        <div x-show="apiKey.length !== 24" class="alert">
+            <h1>Oups...</h1>
+            <p>La clé API que vous avez entré est invalide.</p>
+            <p>Si vous n'en avez pas, obtenez-en une gratuitement sur <a href="https://www.exchangerate-api.com/" target="_blank">ExchangeRate-API</a>.</p>
         </div>
     </div>
 

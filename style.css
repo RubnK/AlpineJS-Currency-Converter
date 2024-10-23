@@ -15,7 +15,7 @@ body{
 	padding: 1rem 4rem;
 	color: black;
     margin-top: 1rem;
-    height: 24rem;
+    height: 28rem;
 }
 input{
     height: 2rem;
@@ -55,6 +55,25 @@ hr{
     border: 1px solid black;
     width: 100%;
     margin-top: 0rem;
+}
+.alert{
+    color: white;
+    text-align: center;
+}
+.alert h1{
+    font-size: 3rem;
+}
+.alert p{
+    font-size: 1.2rem;
+}
+.alert a{
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+.alert a:hover{
+    color: #f1c40f;
 }
 
 @media (max-width: 900px) {
